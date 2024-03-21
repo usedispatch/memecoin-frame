@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@solana/spl-token": "^0.4.1",
+    "@solana/web3.js": "^1.91.1",
     "@usedispatch/solarplex-frame-sdk": "^0.0.15",
     "next": "14.1.4",
     "react": "^18",
