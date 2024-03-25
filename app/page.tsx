@@ -1,4 +1,37 @@
 import Image from "next/image";
+import type { Metadata } from 'next';
+import { NEXT_PUBLIC_URL } from "../config";
+import { getFrameMetadata } from "@usedispatch/solarplex-frame-sdk";
+
+const frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'Button 1',
+    },
+    {
+      label: 'Txn',
+      post_url: 'https://frame-tx.vercel.app/api',
+      action: 'txn'
+    },
+  ],
+  image: `${NEXT_PUBLIC_URL}/park-1.png`,
+  post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+});
+
+
+export const metadata: Metadata = {
+  title: 'Memecoin Madness',
+  description: 'Find out if you\'re a memecoin OG!',
+  openGraph: {
+    title: 'Memecoin Madness',
+    description: 'Find out if you\'re a memecoin OG!',
+    images: [`${NEXT_PUBLIC_URL}/park-1.png`],
+  },
+  other: {
+    ...frameMetadata,
+  },
+};
+
 
 export default function Home() {
   return (

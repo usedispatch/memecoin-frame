@@ -11,28 +11,25 @@ const USER_ADDRESS = new solana.PublicKey('FsSigi7AjKtFmWA4iJMfEqaSNr4h5h6JiiBoS
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
+  const {message} = await getFrameMessage(body);
   const connection = new solana.Connection(rpcUrl)
-  const message = body;
+  // const message = body;
   let text: string = 'default'
-  switch (message?.untrustedData.buttonIndex) {
+  switch (message?.button) {
     case 1: 
       console.log('Button 1 clicked!', message)
       const userTokenAccount = await getAssociatedTokenAddress(TOKEN_ADDRESS, USER_ADDRESS)
       const signaturesForAsset = await connection.getSignaturesForAddress(userTokenAccount)
       const parsedSignatures = await connection.getParsedTransactions(signaturesForAsset.map(s => s.signature), {maxSupportedTransactionVersion: 2})
-      // console.log('Parsed signatures:', parsedSignatures)
       const successfulTransactions = parsedSignatures.filter(s => s?.meta?.err === null)
       const firstTimestamp = successfulTransactions[successfulTransactions.length - 1]?.blockTime
-      // console.log('First timestamp:',  successfulTransactions[successfulTransactions.length - 1], successfulTransactions.length - 1)
       if (!firstTimestamp) {
         return new NextResponse('No successful transaction found')
       }
       const currentTimestamp = Date.now() / 1000
-      // console.log('a timestamp:', firstTimestamp)
-      // console.log('b timestamp:', currentTimestamp)
+
       const timeDifference = currentTimestamp - firstTimestamp
       const daysHeld = Math.floor(timeDifference / (60 * 60 * 24))
-      // console.log('Days held:', daysHeld)
       return new NextResponse(JSON.stringify({daysHeld}))
     default: 
       text = 'Home base of this frame!'    
