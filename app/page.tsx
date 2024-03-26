@@ -16,7 +16,7 @@ const frameMetadata = getFrameMetadata({
     },
   ],
   image: `${NEXT_PUBLIC_URL}/api/image`,
-  post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+  post_url: `${NEXT_PUBLIC_URL}/api/postFrameAction`,
 });
 
 

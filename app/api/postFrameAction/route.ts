@@ -11,6 +11,7 @@ const USER_ADDRESS = new solana.PublicKey('FsSigi7AjKtFmWA4iJMfEqaSNr4h5h6JiiBoS
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
+  console.log('Frame request:', body);
   const {message} = await getFrameMessage(body);
   const connection = new solana.Connection(rpcUrl)
   // const message = body;
@@ -18,7 +19,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   switch (message?.button) {
     case 1: 
       console.log('Button 1 clicked!', message)
-      const userTokenAccount = await getAssociatedTokenAddress(TOKEN_ADDRESS, USER_ADDRESS)
+      if (!body?.untrustedData?.connectedWallet) {
+        return new NextResponse('No connected wallet found')
+      }
+      const userTokenAccount = await getAssociatedTokenAddress(TOKEN_ADDRESS, new solana.PublicKey(body?.untrustedData.connectedWallet ?? ''))
       const signaturesForAsset = await connection.getSignaturesForAddress(userTokenAccount)
       const parsedSignatures = await connection.getParsedTransactions(signaturesForAsset.map(s => s.signature), {maxSupportedTransactionVersion: 2})
       const successfulTransactions = parsedSignatures.filter(s => s?.meta?.err === null)
