@@ -40,7 +40,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             label: `Button 1`,
           }
         ],
-        image: `${NEXT_PUBLIC_URL}/api/image/${daysHeld}`,
+        image: `${NEXT_PUBLIC_URL}/api/image/${daysHeld}?did=${body?.untrustedData?.did}`,
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,
       })
       return new NextResponse(frameResponse)

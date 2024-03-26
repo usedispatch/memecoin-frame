@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { ImageResponse } from "next/og";
 
-function memecoinHome(daysHeld: string) {
+function memecoinHome(daysHeld: string, handle?: string) {
   return (
 <div
   style={{
@@ -24,23 +24,28 @@ function memecoinHome(daysHeld: string) {
   >
     <path d="M37.59.25l36.95 64H.64l36.95-64z"></path>
   </svg>
-  <div style={{ marginTop: 40 }}>{`Token held for ${daysHeld} days`}</div>
+  <div>{`${handle}`}</div>
+  <div style={{ marginTop: 10 }}>{`held dogwifhat for ${daysHeld} days`}</div>
 </div>
 
   );
 }
 async function getResponse(
   req: NextRequest,
-  daysHeld: string
+  daysHeld: string,
+  did?: string
 ): Promise<ImageResponse> {
-  const image = memecoinHome(daysHeld);
+  const profileFetch = await fetch(`https://live.solarplex.xyz/xrpc/app.bsky.actor.getProfile?actor=${did}`)
+  const profile = await profileFetch.json()
+  const image = memecoinHome(daysHeld, profile.handle);
   return new ImageResponse(image, { width: 500, height: 200 });
 }
 export async function GET(
   req: NextRequest,
   { params }: { params: { daysHeld: string } }
 ): Promise<Response> {
-  return getResponse(req, params.daysHeld);
+  const did  = req.nextUrl.searchParams.get('did') ?? '';
+  return getResponse(req, params.daysHeld, did);
 }
 
 export const dynamic = "force-dynamic";
