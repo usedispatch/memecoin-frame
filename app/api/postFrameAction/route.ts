@@ -34,7 +34,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
       const timeDifference = currentTimestamp - firstTimestamp
       const daysHeld = Math.floor(timeDifference / (60 * 60 * 24))
-      return new NextResponse(JSON.stringify({daysHeld}))
+      const frameResponse = getFrameHtmlResponse({
+        buttons: [
+          {
+            label: `Button 1`,
+          }
+        ],
+        image: `${NEXT_PUBLIC_URL}/api/image/${daysHeld}`,
+        post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+      })
+      return new NextResponse(frameResponse)
     default: 
       text = 'Home base of this frame!'    
       return new NextResponse(
