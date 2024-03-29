@@ -7,12 +7,7 @@ import { MemecoinFrameCreateForm } from "@/components/MemecoinFrameCreateForm";
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Button 1',
-    },
-    {
-      label: 'Txn',
-      post_url: 'https://frame-tx.vercel.app/api',
-      action: 'txn'
+      label: 'Check your status!',
     },
   ],
   image: `${NEXT_PUBLIC_URL}/api/image`,

@@ -930,14 +930,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usedispatch/solarplex-frame-sdk@npm:^0.0.15":
-  version: 0.0.15
-  resolution: "@usedispatch/solarplex-frame-sdk@npm:0.0.15"
+"@usedispatch/solarplex-frame-sdk@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@usedispatch/solarplex-frame-sdk@npm:0.0.16"
   dependencies:
     "@usedispatch/atproto-api": 0.7.8
     axios: ^1.6.7
     cheerio: 1.0.0-rc.12
-  checksum: 4b4a0acb795435e6e9189f31324ac2b6f10787521337d2228de20f8c37da5894d4995105f0a68faa8643f5ed50db72c7189a2de386d694718fe8a7fcde6bc3dd
+  checksum: 0f242029ad5327a7931e9d4d07deea14bab32d4ea245ea743cfe988b1cb2e410d7954bce2f1834296a8f3549b09a68d88c2cafcc5d47314e8c989fe40970ef08
   languageName: node
   linkType: hard
 
@@ -3615,7 +3615,7 @@ __metadata:
     "@types/node": ^20
     "@types/react": ^18
     "@types/react-dom": ^18
-    "@usedispatch/solarplex-frame-sdk": ^0.0.15
+    "@usedispatch/solarplex-frame-sdk": 0.0.16
     autoprefixer: ^10.0.1
     class-variance-authority: ^0.7.0
     clsx: ^2.1.0

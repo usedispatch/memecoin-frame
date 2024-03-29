@@ -42,6 +42,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         ],
         image: `${NEXT_PUBLIC_URL}/api/image/${daysHeld}?did=${body?.untrustedData?.did}`,
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+        title: 'Memecoin Madness'
       })
       return new NextResponse(frameResponse)
     default: 
@@ -55,6 +56,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           ],
           image: `${NEXT_PUBLIC_URL}/park-2.png`,
           post_url: `${NEXT_PUBLIC_URL}/api/frame`,
+          title: 'Memecoin Madness'
         }),
       );
   }
