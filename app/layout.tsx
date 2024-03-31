@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import sharp from "sharp";
-import satori from "satori";
 import { NEXT_PUBLIC_URL } from "@/config";
 
 const inter = Inter({
