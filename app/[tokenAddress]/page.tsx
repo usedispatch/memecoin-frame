@@ -28,7 +28,7 @@ export async function generateMetadata(
           numHash,
           process.env.NUMBER_SALT as string
         )}?did=${did}`
-        : `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}?did=${did}`,
+        : `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}`,
     post_url: `${NEXT_PUBLIC_URL}/api/postFrameAction/${props.params.tokenAddress}`,
   });
   const metadata: Metadata = {
