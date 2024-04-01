@@ -66,7 +66,7 @@ async function getResponse(
               )}`,
             },
           ],
-          image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}}`,
+          image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}`,
           post_url: `${NEXT_PUBLIC_URL}/api/frame`,
           title: "Memecoin Madness",
         });
