@@ -3,7 +3,11 @@ import { ImageResponse } from "next/og";
 import { get } from "@vercel/edge-config";
 import { TokenMetadata } from "@/lib/types";
 
-function memecoinHome(tokenImage: string, tokenSymbol: string) {
+function memecoinHome(
+  tokenImage: string,
+  tokenSymbol: string,
+  backgroundImage: ArrayBuffer
+) {
   return (
     <div
       style={{
@@ -16,40 +20,88 @@ function memecoinHome(tokenImage: string, tokenSymbol: string) {
         backgroundColor: "#fff",
         fontSize: 32,
         fontWeight: 800,
-        fontFamily: 'Trebuchet MS, sans-serif',
-        padding: '40px',
       }}
     >
-      <div style={{ display: "flex" }}>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: '40px' }}>
-          <div style={{ maxWidth: "200px"}}>
+      <img
+        src={backgroundImage as any}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          zIndex: -1,
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          padding: "50px",
+          justifyContent: "space-between",
+          marginBottom: "16px"
+        }}
+      >
+        <div
+          style={{ display: "flex", flexDirection: "column", fontSize: "40px", color: "#5e17eb" }}
+        >
+          <div style={{ maxWidth: "200px" }}>
             {`Are you a ${tokenSymbol} OG?`}
           </div>
-          <div style={{ maxWidth: "200px",  textDecoration: 'underline' }}>
+          <div style={{ maxWidth: "200px", textDecoration: "underline" }}>
             {`Prove it.`}
           </div>
         </div>
+        <div style={{display: "flex", marginLeft: "60px"}}>
+          <img
+            src={tokenImage}
+            style={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "100%",
+              marginTop: "10px",
+            }}
+          />
+        </div>
       </div>
-        <img
-          src={tokenImage}
-          style={{ width: "150px", height: "150px", borderRadius: "100%", marginTop: '10px' }}
-        />
     </div>
   );
 }
-async function getResponse(
-  req: NextRequest,
-  tokenAddress: string
-): Promise<ImageResponse> {
-  const tokenMetadata = (await get(tokenAddress)) as TokenMetadata;
-  const image = memecoinHome(tokenMetadata.image, tokenMetadata.symbol);
-  return new ImageResponse(image, { width: 500, height: 200 });
-}
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { tokenAddress: string } }
 ): Promise<Response> {
-  return getResponse(req, params.tokenAddress);
+  // return getResponse(req, params.tokenAddress);
+  const tokenAddress = params.tokenAddress;
+  const tokenMetadata = (await get(tokenAddress)) as TokenMetadata;
+  // Make sure the font exists in the specified path:
+  const fontData = await fetch(
+    new URL("../../../../../assets/HankenGrotesk-Bold.ttf", import.meta.url)
+  ).then((res) => res.arrayBuffer());
+
+  const imageData = await fetch(
+    new URL(
+      "../../../../../assets/memecoinFrameBackground.png",
+      import.meta.url
+    )
+  ).then((res) => res.arrayBuffer());
+  const image = memecoinHome(
+    tokenMetadata.image,
+    tokenMetadata.symbol,
+    imageData
+  );
+
+  return new ImageResponse(image, {
+    width: 500,
+    height: 200,
+    fonts: [
+      {
+        name: "Arimo",
+        data: fontData,
+        weight: 600,
+        style: "normal",
+      },
+    ],
+  });
 }
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
+export const runtime = "edge";
