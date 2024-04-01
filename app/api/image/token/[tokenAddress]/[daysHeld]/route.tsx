@@ -2,9 +2,7 @@ import { TokenMetadata } from "@/lib/types";
 import { get } from "@vercel/edge-config";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-// App router includes @vercel/og.
-// No need to install it.
-// import backgroundImage from "../../../../../../assets/background.jpg";
+
 export const runtime = "edge";
 
 function memecoinHome(
