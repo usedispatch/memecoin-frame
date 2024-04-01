@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { NEXT_PUBLIC_URL } from "../../../../config";
 import * as solana from "@solana/web3.js";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
+import { encryptNumberWithKey } from "@/lib/utils";
 
 const rpcUrl = process.env.MAINNET_RPC_URL ?? "";
 
@@ -57,10 +58,15 @@ async function getResponse(
             {
               label: `Share your status!`,
               action: "share",
-              text: `I've held dogwifhat for ${daysHeld} days! Check your status here: ${NEXT_PUBLIC_URL}/${tokenAddress}?did=${body?.untrustedData?.did}`,
+              text: `I've held dogwifhat for ${daysHeld} days! Check your status here: ${NEXT_PUBLIC_URL}/${tokenAddress}?did=${
+                body?.untrustedData?.did
+              }&num=${encryptNumberWithKey(
+                daysHeld.toString(),
+                process.env.NUMBER_SALT as string
+              )}`,
             },
           ],
-          image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}`,
+          image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}}`,
           post_url: `${NEXT_PUBLIC_URL}/api/frame`,
           title: "Memecoin Madness",
         });
