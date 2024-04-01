@@ -30,7 +30,7 @@ function memecoinHome(
       }}
     >
       <img
-        src={backgroundImage}
+        src={backgroundImage as any}
         style={{
           width: "100%",
           height: "100%",
