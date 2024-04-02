@@ -42,6 +42,7 @@ function memecoinHome(
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: 16,
         }}
       >
         <div style={{ marginTop: 10, maxWidth: "200px", color: "#5e17eb" }}>
@@ -58,7 +59,7 @@ function memecoinHome(
           alignItems: "center",
           marginRight: "auto",
           marginLeft: "16px",
-          marginBottom: "8px",
+          paddingBottom: "16px",
         }}
       >
         <img
@@ -70,7 +71,7 @@ function memecoinHome(
             fontSize: "14px",
             marginLeft: "4px",
             marginTop: "auto",
-            marginBottom: "8px",
+            marginBottom: "16px",
           }}
         >
           {`${userHandle}`}
@@ -104,13 +105,6 @@ export async function GET(
   const profile = await profileFetch.json();
   const tokenMetadata = (await get(params.tokenAddress)) as TokenMetadata;
   const userName = profile.displayName ?? profile.handle;
-  console.log(
-    params.daysHeld,
-    userName,
-    profile.avatar,
-    tokenMetadata.symbol,
-    tokenMetadata.image
-  );
   const image = memecoinHome(
     params.daysHeld,
     userName,
