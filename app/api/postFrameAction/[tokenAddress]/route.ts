@@ -7,6 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { NEXT_PUBLIC_URL } from "../../../../config";
 import * as solana from "@solana/web3.js";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
+import { encryptNumberWithKey } from "@/lib/utils";
+import { get } from '@vercel/edge-config'
+import { TokenMetadata } from "@/lib/types";
 
 const rpcUrl = process.env.MAINNET_RPC_URL ?? "";
 
@@ -26,6 +29,7 @@ async function getResponse(
         if (!body?.untrustedData?.connectedWallet) {
           return new NextResponse("No connected wallet found");
         }
+        const tokenMetadata: TokenMetadata = await get(tokenAddress) as any;
         const userTokenAccount = await getAssociatedTokenAddress(
           TOKEN_ADDRESS,
           new solana.PublicKey(
@@ -49,7 +53,7 @@ async function getResponse(
           firstTimestamp = Date.now() / 1000;
         }
         const currentTimestamp = Date.now() / 1000;
-
+        const post = body.untrustedData.itemUri;
         const timeDifference = currentTimestamp - firstTimestamp;
         const daysHeld = Math.floor(timeDifference / (60 * 60 * 24));
         const frameResponse = getFrameHtmlResponse({
@@ -57,7 +61,17 @@ async function getResponse(
             {
               label: `Share your status!`,
               action: "share",
-              text: `I've held dogwifhat for ${daysHeld} days! Check your status here: ${NEXT_PUBLIC_URL}/${tokenAddress}?did=${body?.untrustedData?.did}`,
+              text: `I've held ${tokenMetadata.symbol} for ${daysHeld} days! Check your status here: 
+              \n \n
+              ${NEXT_PUBLIC_URL}/${tokenAddress}?did=${
+                body?.untrustedData?.did
+              }&num=${encryptNumberWithKey(
+                daysHeld.toString(),
+                process.env.NUMBER_SALT as string
+              )}&post=${post?.split('/').pop()} 
+              
+              \n \n
+              `,
             },
           ],
           image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}`,
