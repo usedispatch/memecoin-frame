@@ -44,9 +44,18 @@ async function getResponse(
           signaturesForAsset.map((s) => s.signature),
           { maxSupportedTransactionVersion: 2 }
         );
-        const successfulTransactions = parsedSignatures.filter(
+
+        // @ts-ignore
+        const successfulTransactions: solana.ParsedTransactionWithMeta[] = parsedSignatures.filter(
           (s) => s?.meta?.err === null
         );
+
+        // sort transactions
+        successfulTransactions.sort((a, b) => {
+          return (
+            (b.blockTime || 0) - (a.blockTime || 0)
+          );
+        });
         let firstTimestamp =
           successfulTransactions[successfulTransactions.length - 1]?.blockTime;
         if (!firstTimestamp) {
