@@ -16,19 +16,22 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const did = props.searchParams.did as string;
   const numHash = props.searchParams.num as string;
+  const image =
+    did && numHash
+      ? `${NEXT_PUBLIC_URL}/api/image/token/${
+          props.params.tokenAddress
+        }/${decryptNumberWithKey(
+          numHash,
+          process.env.NUMBER_SALT as string
+        )}?did=${did}`
+      : `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}`;
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
         label: "Check your status!",
       },
     ],
-    image:
-      did && numHash
-        ? `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}/${decryptNumberWithKey(
-          numHash,
-          process.env.NUMBER_SALT as string
-        )}?did=${did}`
-        : `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}`,
+    image: image,
     post_url: `${NEXT_PUBLIC_URL}/api/postFrameAction/${props.params.tokenAddress}`,
   });
   const metadata: Metadata = {
@@ -37,9 +40,7 @@ export async function generateMetadata(
     openGraph: {
       title: "Memecoin Madness",
       description: "Find out if you're a memecoin OG!",
-      images: [
-        `${NEXT_PUBLIC_URL}/api/image/token/${props.params.tokenAddress}?did=${did}`,
-      ],
+      images: [image],
     },
     other: {
       ...frameMetadata,
@@ -50,5 +51,7 @@ export async function generateMetadata(
 
 export default function Home(params: Props) {
   const did = params.searchParams.did as string;
-  return <SolarplexRedirect did={did} post={params.searchParams.post as string} />;
+  return (
+    <SolarplexRedirect did={did} post={params.searchParams.post as string} />
+  );
 }
