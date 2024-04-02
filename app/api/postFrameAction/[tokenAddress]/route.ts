@@ -61,7 +61,7 @@ async function getResponse(
             {
               label: `Share your status!`,
               action: "share",
-              text: `I've held ${tokenMetadata.symbol} for ${daysHeld} days! Check your status here: 
+              text: `I've held ${tokenMetadata.symbol} for ${daysHeld} days! See your stats on @solarplex_xyz here: 
               \n \n
               ${NEXT_PUBLIC_URL}/${tokenAddress}?did=${
                 body?.untrustedData?.did
