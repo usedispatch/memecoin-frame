@@ -45,7 +45,7 @@ function memecoinHome(
           marginTop: 20,
         }}
       >
-        <div style={{ marginTop: 10, maxWidth: "200px", color: "#5e17eb" }}>
+        <div style={{ marginTop: 14, maxWidth: "175px", color: "#5e17eb" }}>
           {`I've held ${tokenSymbol} for ${daysHeld} days!`}
         </div>
         <img
@@ -64,7 +64,7 @@ function memecoinHome(
       >
         <img
           src={userImage}
-          style={{ width: "50px", height: "50px", borderRadius: "100%" }}
+          style={{ width: "40px", height: "40px", borderRadius: "100%" }}
         />
         <div
           style={{
