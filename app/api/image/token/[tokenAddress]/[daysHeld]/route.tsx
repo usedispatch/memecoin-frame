@@ -23,7 +23,7 @@ function memecoinHome(
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#fff",
-        fontSize: 36,
+        fontSize: 32,
         fontWeight: 600,
       }}
     >
@@ -42,7 +42,7 @@ function memecoinHome(
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: 16,
+          marginTop: 20,
         }}
       >
         <div style={{ marginTop: 10, maxWidth: "200px", color: "#5e17eb" }}>
