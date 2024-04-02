@@ -2,8 +2,8 @@ import Image from "next/image";
 import type { Metadata, ResolvingMetadata } from "next";
 import { NEXT_PUBLIC_URL } from "@/config";
 import { getFrameMetadata } from "@usedispatch/solarplex-frame-sdk";
-import { MemecoinFrameCreateForm } from "@/components/MemecoinFrameCreateForm";
 import { decryptNumberWithKey } from "../../lib/utils";
+import SolarplexRedirect from "./redirect";
 
 type Props = {
   params: { tokenAddress: string };
@@ -48,10 +48,7 @@ export async function generateMetadata(
   return metadata;
 }
 
-export default function Home({ params }: { params: { tokenAddress: string } }) {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <MemecoinFrameCreateForm />
-    </main>
-  );
+export default function Home(params: Props) {
+  const did = params.searchParams.did as string;
+  return <SolarplexRedirect did={did} post={params.searchParams.post as string} />;
 }

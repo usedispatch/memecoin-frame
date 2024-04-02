@@ -50,7 +50,7 @@ async function getResponse(
           firstTimestamp = Date.now() / 1000;
         }
         const currentTimestamp = Date.now() / 1000;
-
+        const post = body.untrustedData.itemUri;
         const timeDifference = currentTimestamp - firstTimestamp;
         const daysHeld = Math.floor(timeDifference / (60 * 60 * 24));
         const frameResponse = getFrameHtmlResponse({
@@ -63,7 +63,7 @@ async function getResponse(
               }&num=${encryptNumberWithKey(
                 daysHeld.toString(),
                 process.env.NUMBER_SALT as string
-              )}`,
+              )}&post=${post?.split('/').pop()}`,
             },
           ],
           image: `${NEXT_PUBLIC_URL}/api/image/token/${tokenAddress}/${daysHeld}?did=${body?.untrustedData?.did}`,
