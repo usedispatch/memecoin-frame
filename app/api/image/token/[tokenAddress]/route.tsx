@@ -40,9 +40,9 @@ function memecoinHome(
         }}
       >
         <div
-          style={{ display: "flex", flexDirection: "column", fontSize: "32px", color: "#5e17eb" }}
+          style={{ display: "flex", flexDirection: "column", fontSize: "36px", color: "#5e17eb" }}
         >
-          <div style={{ maxWidth: "220px" }}>
+          <div style={{ maxWidth: "200px" }}>
             {`Are you a ${tokenSymbol} OG?`}
           </div>
           <div style={{ maxWidth: "200px", textDecoration: "underline" }}>
